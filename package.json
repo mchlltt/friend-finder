@@ -1,17 +1,28 @@
 {
-  "name": "friendfinder",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "start": "node ./bin/www"
-  },
+  "name": "friend-finder",
+  "version": "1.0.0",
+  "description": "An Express.js friend-finding application",
+  "main": "server.js",
   "dependencies": {
-    "body-parser": "~1.15.2",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.2.0",
-    "express": "~4.14.0",
-    "jade": "~1.11.0",
-    "morgan": "~1.7.0",
-    "serve-favicon": "~2.3.0"
-  }
+    "body-parser": "^1.16.0",
+    "express": "^4.14.0",
+    "path": "^0.12.7",
+    "serve-favicon": "^2.3.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mchlltt/friend-finder.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mchlltt/friend-finder/issues"
+  },
+  "homepage": "https://github.com/mchlltt/friend-finder#readme"
 }

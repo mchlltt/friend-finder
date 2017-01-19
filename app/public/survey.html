@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FriendFinder</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="col-xs-12">
+    <div class="row">
+        <h1>Survey Questions</h1>
+        <hr>
+        <form>
+            <h2>About You</h2>
+            <div class="form-group">
+                <label for="userName">Your Name (Required)</label>
+                <input type="email" class="form-control" id="userName" placeholder="Your name here">
+            </div>
+            <div class="form-group">
+                <label for="imageLink">Your Photo</label>
+                <input type="url" class="form-control" id="imageLink" placeholder="http://your-image.com/link.png">
+            </div>
+            <hr>
+            <div id="questions"></div>
+            <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+        </form>
+        <hr>
+        <p>
+            <span><a href="/api/friends">API Friend List</a> | </span>
+            <span><a href="https://github.com/mchlltt/friend-finder">GitHub Repository</a></span>
+        </p>
+    </div>
+</div>
+<script>
+    var questions = [
+        'One',
+        'Two',
+        'Three',
+        'Four',
+        'Five',
+        'Six',
+        'Seven',
+        'Eight',
+        'Nine',
+        'Ten'
+    ];
+
+    var choices = [
+        '1 (Strongly Disagree)',
+        '2',
+        '3',
+        '4',
+        '5 (Strongly Agree)'
+    ];
+
+    var questionDiv = $('#questions');
+
+    i = 0;
+
+    questions.forEach(function (question) {
+        i++;
+        var item = $('<div class="question">');
+        var headline = $('<h2>').text('Question ' + i);
+        var questionText = $('<h3>').text(question);
+        var dropDown = $('<div class="form-group">');
+        var select = $('<select class="form-control selector">');
+        choices.forEach(function(choice) {
+            var option = $('<option>').text(choice);
+            select.append(option);
+        });
+        select.attr('id', 'select' + i);
+        dropDown.append(select);
+        item.append(headline, questionText, dropDown);
+        questionDiv.append(item);
+    });
+
+    $('#submit').on('click', function() {
+        var answers = [];
+        Object.keys($('.selector')).forEach(function(key) {
+            if (answers.length < questions.length) {
+                answers.push($('.selector')[key].value.charAt(0));
+            }
+        });
+        var data = {
+            name: $('#userName').val(),
+            photo: $('#imageLink').val(),
+            answers: answers
+        };
+
+        console.log(data);
+
+        app.post('api/friends', function(req, res) {
+            // something with data.
+        });
+
+        return false;
+    });
+
+</script>
+</body>
+</html>
