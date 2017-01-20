@@ -43,23 +43,27 @@ $(document).ready(function() {
 
     $('#submit').on('click', function() {
         var answers = [];
+
         Object.keys($('.selector')).forEach(function(key) {
             if (answers.length < questions.length) {
                 answers.push($('.selector')[key].value.charAt(0));
             }
         });
-        var data = {
+
+        var surveyData = {
             name: $('#userName').val(),
             photo: $('#imageLink').val(),
             answers: answers
         };
 
-        console.log(data);
+        $.post('/api/friends', surveyData, function(data) {
 
-        app.post('api/friends', function(req, res) {
-            // something with data.
+            // Need to replace this with a modal, but it works for testing.
+            if (data) {
+                alert(JSON.stringify(data));
+            }
+
+            return false;
         });
-
-        return false;
     });
 });
