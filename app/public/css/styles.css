@@ -5,3 +5,9 @@
 .form-group {
     width: 300px;
 }
+
+.warning {
+    display: none;
+    color: red;
+    font-weight: bold;
+}

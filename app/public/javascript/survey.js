@@ -1,22 +1,22 @@
 $(document).ready(function() {
     var questions = [
-        'One',
-        'Two',
-        'Three',
-        'Four',
-        'Five',
-        'Six',
-        'Seven',
-        'Eight',
-        'Nine',
-        'Ten'
+        'I am the life of the party.',
+        'I am extraordinarily cynical.',
+        'I have a poor grip on reality.',
+        'I crave attention.',
+        'I would rather sleep in on my days off.',
+        'I have a good relationship with my family.',
+        'I can usually remember everything I\'ve done lately without too much effort.',
+        'I enjoy cooking for myself and others.',
+        'I am a pet person.',
+        'I believe in a higher power.'
     ];
 
     var choices = [
         '1 (Strongly Disagree)',
-        '2',
-        '3',
-        '4',
+        '2 (Disagree)',
+        '3 (Neutral)',
+        '4 (Agree)',
         '5 (Strongly Agree)'
     ];
 
@@ -45,48 +45,58 @@ $(document).ready(function() {
 
         event.preventDefault();
 
-        var answers = [];
+        var userName = $('#userName').val();
+        var imageLink = $('#imageLink').val();
 
-        Object.keys($('.selector')).forEach(function(key) {
-            if (answers.length < questions.length) {
-                answers.push($('.selector')[key].value.charAt(0));
-            }
-        });
+        if (userName.length > 0 && imageLink.length >0) {
+            var answers = [];
 
-        var surveyData = {
-            name: $('#userName').val(),
-            photo: $('#imageLink').val(),
-            answers: answers
-        };
-
-        $.post('/api/friends', surveyData, function(data) {
-
-            if (data) {
-
-                $('#modalContent').empty();
-
-                data.forEach(function(profile) {
-                    console.log(profile);
-                    var profileDiv = $('<div class="profile">');
-                    var name = profile.name;
-                    var photoURL = profile.photo;
-                    var nameHeader = $('<h3>').text(name);
-                    var photo = $('<img>').attr('src', photoURL);
-                    profileDiv.append(nameHeader, photo);
-
-                    $('#modalContent').append(profileDiv);
-                });
-
-                if (data.length > 1) {
-                    $('.modal-title').text('Your best matches!');
-                } else {
-                    $('.modal-title').text('Your best match!');
+            Object.keys($('.selector')).forEach(function(key) {
+                if (answers.length < questions.length) {
+                    answers.push($('.selector')[key].value.charAt(0));
                 }
+            });
 
-                $('#resultModal').modal();
-            }
+            var surveyData = {
+                name: userName,
+                photo: imageLink,
+                answers: answers
+            };
 
-            // return false;
-        });
+            $.post('/api/friends', surveyData, function(data) {
+
+                if (data) {
+
+                    $('#modalContent').empty();
+                    $('#userName').val('');
+                    $('#imageLink').val('');
+
+                    data.forEach(function(profile) {
+                        console.log(profile);
+                        var profileDiv = $('<div class="profile">');
+                        var name = profile.name;
+                        var photoURL = profile.photo;
+                        var nameHeader = $('<h3>').text(name);
+                        var photo = $('<img>').attr('src', photoURL);
+                        profileDiv.append(nameHeader, photo);
+
+                        $('#modalContent').append(profileDiv);
+                    });
+
+                    if (data.length > 1) {
+                        $('.modal-title').text('Your best matches!');
+                    } else {
+                        $('.modal-title').text('Your best match!');
+                    }
+
+                    $('#resultModal').modal();
+                }
+            });
+        } else {
+            $('.warning').show();
+            setTimeout(function() {
+                $('.warning').hide();
+            }, 2500);
+        }
     });
 });
