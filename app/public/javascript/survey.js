@@ -41,7 +41,10 @@ $(document).ready(function() {
         questionDiv.append(item);
     });
 
-    $('#submit').on('click', function() {
+    $('#submit').on('click', function(event) {
+
+        event.preventDefault();
+
         var answers = [];
 
         Object.keys($('.selector')).forEach(function(key) {
@@ -58,12 +61,32 @@ $(document).ready(function() {
 
         $.post('/api/friends', surveyData, function(data) {
 
-            // Need to replace this with a modal, but it works for testing.
             if (data) {
-                alert(JSON.stringify(data));
+
+                $('#modalContent').empty();
+
+                data.forEach(function(profile) {
+                    console.log(profile);
+                    var profileDiv = $('<div class="profile">');
+                    var name = profile.name;
+                    var photoURL = profile.photo;
+                    var nameHeader = $('<h3>').text(name);
+                    var photo = $('<img>').attr('src', photoURL);
+                    profileDiv.append(nameHeader, photo);
+
+                    $('#modalContent').append(profileDiv);
+                });
+
+                if (data.length > 1) {
+                    $('.modal-title').text('Your best matches!');
+                } else {
+                    $('.modal-title').text('Your best match!');
+                }
+
+                $('#resultModal').modal();
             }
 
-            return false;
+            // return false;
         });
     });
 });
