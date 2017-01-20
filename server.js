@@ -19,4 +19,4 @@ app.use(express.static(__dirname + '/app/public'));
 require('./app/routing/apiRoutes')(app);
 require('./app/routing/htmlRoutes')(app);
 
-app.listen(PORT);
+app.listen(PORT, '0.0.0.0');
