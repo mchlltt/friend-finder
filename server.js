@@ -1,6 +1,5 @@
 // Import dependencies.
 var express = require('express');
-// var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
 
 // Initialize app.
@@ -8,7 +7,6 @@ var app = express();
 var PORT = process.env.port || 3000;
 
 // Set up middleware.
-// app.use(favicon(path.join(__dirname, 'app/public', 'favicon.ico')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
