@@ -1,9 +1,10 @@
+var path = require('path');
+
 module.exports = function(app) {
-    var path = require('path');
 
     app.get('/api/friends', function(req, res) {
         // Placeholder.
-        res.sendFile(path.resolve('app/public/home.html'));
+        res.sendFile(path.join(__dirname + '/../public/home.html'));
     });
 
     app.post('/api/friends', function(req, res) {
