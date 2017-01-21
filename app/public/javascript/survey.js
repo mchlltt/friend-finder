@@ -44,7 +44,8 @@ $(document).ready(function() {
         // Add the dropdown to the item, then add the item to the questions div.
         dropDown.append(select);
         item.append(headline, questionText, dropDown);
-        questionDiv.append(item);
+        var br = $(<br>);
+        questionDiv.append(item, br);
     });
 
     // Event handler for when the form is submitted.
